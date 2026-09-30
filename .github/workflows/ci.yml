@@ -10,7 +10,16 @@ on:
       - main
 
 jobs:
-  build:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Linting
+        run: echo "Linting..."
+
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,3 +35,11 @@ jobs:
 
       - name: Run tests
         run: pytest
+
+  build:
+    needs: [lint, test]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Build
+        run: echo "Building..."
